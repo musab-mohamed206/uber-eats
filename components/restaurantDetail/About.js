@@ -1,32 +1,50 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React from "react";
+import { View, Text, Image } from "react-native";
 
-const image =  "https://static.onecms.io/wp-content/uploads/sites/9/2020/04/24/ppp-why-wont-anyone-rescue-restaurants-FT-BLOG0420.jpg";
-const name = "Beachside Bar";
-const price = "$$";
-const reviews = 1244;
-const rating = 4.5;
-const categories = ["Cafe", "Bar"];
-const description = 'Thai . Comfort Food . $$ . :ticket '
+export default function About({route, ...props}) {
+  const { name, image, price, reviews, rating, categories } =
+  route.params;
 
-export default function About() {
+  const formattedCategories = categories.map((cat) => cat.title).join(" • ");
+
+  const description = `${formattedCategories} ${
+    price ? " • " + price : ""
+  } • 🎫 • ${rating} ⭐ (${reviews}+)`;
   return (
     <View>
       <RestaurantImage image={image} />
-      <RestaurantTitle name={name} />
+      <RestaurantName name={name} />
       <RestaurantDescription description={description} />
     </View>
-  )
+  );
 }
 
 const RestaurantImage = (props) => (
-    <Image source={{ uri: props.image }} style={{ width: "100%", height: 200 }} />
+  <Image source={{ uri: props.image }} style={{ width: "100%", height: 180 }} />
 );
 
-const RestaurantTitle = (props) => (
-    <Text style={{ fontSize: 29, fontWeight: "bold", marginTop: 10, marginHorizontal: 15 }}>{props.name}</Text>
+const RestaurantName = (props) => (
+  <Text
+    style={{
+      fontSize: 29,
+      fontWeight: "600",
+      marginTop: 10,
+      marginHorizontal: 15,
+    }}
+  >
+    {props.name}
+  </Text>
 );
 
 const RestaurantDescription = (props) => (
-    <Text style={{ fontSize: 15, marginTop: 10, marginHorizontal: 15, fontWeight: "500" }}>{props.description}</Text>
+  <Text
+    style={{
+      marginTop: 10,
+      marginHorizontal: 15,
+      fontWeight: "400",
+      fontSize: 15.5,
+    }}
+  >
+    {props.description}
+  </Text>
 );
